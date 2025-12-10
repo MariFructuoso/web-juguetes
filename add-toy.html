@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Juguete</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 2rem;">🎅</span>
+            <h1>Lista de Navidad</h1>
+        </div>
+        <nav>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="add-toy.html" class="nav-btn active">Añadir Juguete</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="add-view">
+            <div class="form-container">
+                <h2 style="text-align: center; color: #D42426; margin-top: 0;">🎁 Nuevo Regalo</h2>
+                
+                <form id="form-toy">
+                    <div class="form-group">
+                        <label for="t-name">Nombre del Juguete:</label>
+                        <input type="text" id="t-name" class="form-control" placeholder="Ej: Consola..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="t-image">Foto del Juguete (desde tu PC):</label>
+                        <input type="file" id="t-image" class="form-control" accept="image/*" required>
+                        
+                        <div style="margin-top: 10px; text-align: center;">
+                            <img id="img-preview" src="" alt="" style="display:none; max-width: 100%; height: 150px; border-radius: 8px; border: 2px solid #ccc;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="t-desc">Descripción:</label>
+                        <textarea id="t-desc" class="form-control" rows="4" placeholder="¿Por qué te has portado bien?" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Enviar a Santa Claus</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/src/add.ts"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "web-juguetes",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite",     
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.17",
+    "ol": "^10.7.0",
+    "tailwindcss": "^4.1.17"
+  }
+}
