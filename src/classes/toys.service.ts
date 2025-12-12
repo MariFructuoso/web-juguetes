@@ -5,21 +5,24 @@ import type { Toy, ToyInsert, ToysResponse, SingleToyResponse } from "../interfa
 export class ToysService {
   #http = new Http();
 
+  // src/classes/toys.service.ts
   async getToys(): Promise<Toy[]> {
-    // Llamamos a /juguetes
-    const res = await this.#http.get<ToysResponse>(`${API_URL}/juguetes`);
-    return res.data; 
+    // AÑADIMOS "/api" AQUÍ
+    const res = await this.#http.get<ToysResponse>(`${API_URL}/api/juguetes`);
+    return res.data;
   }
 
-  async insertToy(toy: ToyInsert): Promise<Toy> {
+  async postToy(toy: ToyInsert): Promise<Toy> {
+    // AÑADIMOS "/api" AQUÍ TAMBIÉN
     const res = await this.#http.post<SingleToyResponse, ToyInsert>(
-      `${API_URL}/juguetes`,
+      `${API_URL}/api/juguetes`,
       toy
     );
     return res.data;
   }
 
   async deleteToy(id: number): Promise<void> {
-    await this.#http.delete<void>(`${API_URL}/juguetes/${id}`);
+    // Y AQUÍ
+    await this.#http.delete<void>(`${API_URL}/api/juguetes/${id}`);
   }
 }

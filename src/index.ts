@@ -1,62 +1,65 @@
 import { ToysService } from "./classes/toys.service";
 import type { Toy } from "./interfaces/toy.interfaces";
 
-const toysService = new ToysService();
-const container = document.getElementById('toys-container') as HTMLDivElement;
+// 1. Selección de elementos (OJO: Ahora buscamos "toys-list")
+const listContainer = document.getElementById("toys-list") as HTMLUListElement;
+const template = document.getElementById("toyTemplate") as HTMLTemplateElement;
 
-// Función principal
-async function loadToys() {
+const toysService = new ToysService();
+
+// 2. Función para pintar UNA FILA (List Item)
+function addToyRow(toy: Toy): void {
+    // Clonamos el <li>
+    const clone = (template.content.cloneNode(true) as DocumentFragment).firstElementChild!;
+
+    // Buscamos dentro del <li>
+    const img = clone.querySelector(".toy-img") as HTMLImageElement;
+    const title = clone.querySelector(".toy-title") as HTMLHeadingElement;
+    const desc = clone.querySelector(".toy-desc") as HTMLParagraphElement;
+    const btnDelete = clone.querySelector(".btn-delete") as HTMLButtonElement;
+
+    // Rellenamos
+    img.src = toy.imagen;
+    img.alt = toy.nombre;
+    title.textContent = toy.nombre;
+    desc.textContent = toy.descripcion;
+
+    // Evento Borrar
+    btnDelete.addEventListener("click", async () => {
+        if (confirm(`¿Borrar ${toy.nombre}?`)) {
+            try {
+                await toysService.deleteToy(toy.id);
+                clone.remove(); 
+            } catch (error) {
+                console.error(error);
+                alert("Error al borrar");
+            }
+        }
+    });
+
+    // Añadimos a la lista <ul>
+    listContainer.append(clone);
+}
+
+// 3. Cargar todo
+async function getToys() {
     try {
         const toys = await toysService.getToys();
-        renderToys(toys);
-    } catch (error) {
-        console.error("Error cargando juguetes:", error);
-        container.innerHTML = '<p class="text-center text-red-500">Error al cargar la carta.</p>';
-    }
-}
 
-// Función para pintar el HTML (separada para que quede limpio)
-function renderToys(toys: Toy[]) {
-    container.innerHTML = '';
-
-    if (toys.length === 0) {
-        container.innerHTML = '<p class="text-center text-gray-500">No hay juguetes todavía.</p>';
-        return;
-    }
-
-    toys.forEach((toy) => {
-        // Creamos la tarjeta usando estilos de Tailwind (si los tienes) o CSS normal
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-lg shadow-md p-4 flex flex-col gap-2";
-        
-        card.innerHTML = `
-            <img src="${toy.imagen}" alt="${toy.nombre}" class="w-full h-48 object-cover rounded-md">
-            <h3 class="text-xl font-bold text-red-600">${toy.nombre}</h3>
-            <p class="text-gray-600 flex-grow">${toy.descripcion}</p>
-            <button class="btn-delete bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition" data-id="${toy.id}">
-                Borrar
-            </button>
-        `;
-
-        // Añadimos evento de borrado al botón
-        const btnDelete = card.querySelector('.btn-delete') as HTMLButtonElement;
-        btnDelete.addEventListener('click', () => handleDelete(toy.id));
-
-        container.appendChild(card);
-    });
-}
-
-async function handleDelete(id: number) {
-    if (confirm("¿Borrar este juguete?")) {
-        try {
-            await toysService.deleteToy(id);
-            loadToys(); // Recargar la lista
-        } catch (error) {
-            console.error(error);
-            alert("Error al borrar");
+        if (toys.length === 0) {
+            listContainer.innerHTML = '<p style="text-align:center; color: white;">La lista está vacía 🎅</p>';
+            return;
         }
+
+        listContainer.innerHTML = "";
+        
+        // Ahora llamamos a addToyRow
+        toys.forEach(addToyRow);
+
+    } catch (error) {
+        console.error(error);
+        listContainer.innerHTML = '<p style="text-align:center; color: red;">Error de conexión</p>';
     }
 }
 
-// Iniciar
-loadToys();
+getToys();

@@ -32,12 +32,12 @@ form.addEventListener('submit', async (e) => {
     const newToy: ToyInsert = {
         nombre: nameInput.value,
         descripcion: descInput.value,
-        imagen: currentImageBase64 || "https://via.placeholder.com/150"
+        imagen: currentImageBase64
     };
 
     try {
-        await toysService.insertToy(newToy);
-        location.assign("index.html"); // Redirigir al estilo clásico
+        await toysService.postToy(newToy);
+        location.assign("index.html"); 
     } catch (error) {
         console.error(error);
         alert('Error al guardar el juguete');

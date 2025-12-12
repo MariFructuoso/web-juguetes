@@ -6,7 +6,6 @@ export class Http {
     body?: string
   ): Promise<T> {
     
-    // Aquí hacías lo del token, lo quitamos para este examen
     const resp = await fetch(url, { method, headers, body });
     
     if (!resp.ok) throw await resp.json();

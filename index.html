@@ -1,31 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de Navidad - Home</title>
-    <link rel="stylesheet" href="src/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
     <header>
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 2rem;">🎄</span>
-            <h1>Lista de Navidad</h1>
-        </div>
-        <nav>
-            <a href="index.html" class="nav-btn active">Home</a>
-            <a href="add-toy.html" class="nav-btn">Añadir Juguete</a>
-        </nav>
+      <div style="display: flex; align-items: center; gap: 10px">
+        <span style="font-size: 2rem">🎄</span>
+        <h1>Lista de Navidad</h1>
+      </div>
+      <nav>
+        <a href="index.html" class="nav-btn active">Home</a>
+        <a href="add-toy.html" class="nav-btn">Añadir Juguete</a>
+      </nav>
     </header>
 
     <main class="container">
-        <section id="home-view">
-            <div id="toys-container">
-                <p style="text-align: center;">Cargando cartas a Santa...</p>
+      <section id="home-view">
+        <h2 style="text-align: center; margin-bottom: 20px">
+          📜 Listado de Deseos
+        </h2>
+
+        <ul id="toys-list"></ul>
+        <template id="toyTemplate">
+          <li class="toy-row">
+            <img src="" alt="" class="toy-img" />
+
+            <div class="toy-info">
+              <h3 class="toy-title"></h3>
+              <p class="toy-desc"></p>
             </div>
-        </section>
+
+            <button class="btn-delete">BORRAR</button>
+          </li>
+        </template>
+      </section>
     </main>
 
     <script type="module" src="/src/index.ts"></script>
-</body>
+  </body>
 </html>
